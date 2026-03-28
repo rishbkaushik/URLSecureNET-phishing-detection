@@ -28,4 +28,25 @@ An AI-powered web application that detects whether a URL is **legitimate or phis
 
 ---
 
+
 ## 📂 Project Structure
+
+phishing-detection/
+
+├── app.py  
+├── requirements.txt  
+├── Procfile  
+
+├── models/  
+│   ├── logistic_phishing.pkl  
+│   ├── Naive_Bayes_phishing.pkl  
+│   ├── svm_model.pkl  
+│   ├── vectorizer.pkl  
+
+├── static/  
+│   ├── style.css  
+│   ├── logo.png  
+
+├── templates/  
+│   ├── index.html  
+│   └── result.html  
