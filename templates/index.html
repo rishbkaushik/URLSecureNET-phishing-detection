@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>URLSecureNET | Intelligent Phishing Detection</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+
+
+<body>
+
+<div class="wrapper">
+
+    <header>
+        <img class="logo-big" src="{{ url_for('static', filename='logo1.png') }}">
+        <h1>URLSecureNET</h1>
+        <p>AI-Powered URL Security & Phishing Detection System</p>
+        <!-- <p>Intelligent Phishing Detection System</p> -->
+        <div class="theme-toggle">
+            <label class="switch">
+                <input type="checkbox" id="themeSwitch">
+                <span class="slider"></span>
+            </label>
+        </div>
+    </header>
+
+    <main>
+        <div class="card">
+
+            <h2>Analyze URL Safety</h2>
+
+            <form action="/predict" method="POST">
+
+                <label>Enter URL</label>
+                <input type="text" name="url" placeholder="https://example.com" required>
+
+                <label>Select Model</label>
+                <select name="model">
+                    <option value="logistic">Logistic Regression</option>
+                    <option value="nb">Naive Bayes</option>
+                    <option value="rf">Random Forest</option>
+                    <option value="svm">SVM</option>
+                </select>
+
+                <button type="submit">🔍 Analyze</button>
+
+            </form>
+
+        </div>
+    </main>
+
+    <footer>
+        © 2026 URLSecureNET | Secure Browsing with Machine Learning
+    </footer>
+
+</div>
+
+</body>
+</html>

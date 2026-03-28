@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Analysis Result | URLSecureNET</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+
+
+<body>
+
+<div class="wrapper">
+
+    <header>
+        
+        <h1>🔐 URLSecureNET</h1>
+        <p>Secure Your Browsing with Smart Phishing Detection</p>
+        <!-- <p>Phishing Detection Result</p> -->
+    </header>
+
+    <main>
+        <div class="card result-card">
+
+            <h2>🔍 Analysis Result</h2>
+
+            <div class="url-box">
+                <p>Analyzed URL</p>
+                <span>{{ url }}</span>
+            </div>
+
+            <div class="result-box">
+                {% if final_prediction == 'bad' %}
+                    <div class="status bad">
+                        ❌ Phishing Website Detected
+                    </div>
+                {% else %}
+                    <div class="status good">
+                        ✅ Safe Website
+                    </div>
+                {% endif %}
+            </div>
+
+            <h3>📊 Model Comparison</h3>
+
+            <table>
+                <tr>
+                    <th>Model</th>
+                    <th>Prediction</th>
+                    <th>Confidence</th>
+                </tr>
+
+                {% for model, pred in results.items() %}
+                <tr>
+                    <td>{{ model }}</td>
+
+                    {% if pred == 'bad' %}
+                        <td class="result-bad">❌ Phishing</td>
+                    {% else %}
+                        <td class="result-good">✅ Safe</td>
+                    {% endif %}
+
+                    <td>
+                        {% if confidence[model] %}
+                            {{ confidence[model] }}%
+                        {% else %}
+                            N/A
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+
+            <a href="/" class="back-btn">← Analyze Another URL</a>
+
+        </div>
+    </main>
+
+    <footer>
+        © 2026 URLSecureNET
+    </footer>
+
+</div>
+
+</body>
+</html>
