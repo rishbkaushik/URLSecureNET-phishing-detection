@@ -50,3 +50,8 @@ phishing-detection/
 ├── templates/  
 │   ├── index.html  
 │   └── result.html  
+
+<img width="1897" height="903" alt="Screenshot 2026-03-28 200659" src="https://github.com/user-attachments/assets/5a1b60b6-0f8b-43c9-90d2-985188f6276b" />
+
+<img width="1887" height="909" alt="Screenshot 2026-03-28 200642" src="https://github.com/user-attachments/assets/cf2d722b-632e-4d77-9041-5ce4909ab98b" />
+
