@@ -30,7 +30,7 @@ def predict():
 
     url = request.form['url']
 
-    # 🔥 CLEAN URL
+    #  CLEAN URL
     cleaned_url = re.sub(r'^https?://(www\.)?', '', url).lower()
 
     # Convert to vector
@@ -83,4 +83,4 @@ def predict():
 # RUN APP
 # =========================
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=5000, debug=True)
