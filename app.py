@@ -1,86 +1,152 @@
-from flask import Flask, render_template, request
+from flask import Flask, request, jsonify
+from flask_cors import CORS
 import pickle
 import re
+import os
 
 app = Flask(__name__)
+CORS(app)
 
 # =========================
-# LOAD MODELS (ONLY ONCE)
+# LOAD MODELS
 # =========================
-log_model = pickle.load(open("models/logistic_phishing.pkl", "rb"))
-nb_model = pickle.load(open("models/Naive_Bayes_phishing.pkl", "rb"))
-# rf_model = pickle.load(open("models/Random_forest_phishing.pkl", "rb"))
-svm_model = pickle.load(open("models/svm_model.pkl", "rb"))
 
-# Load vectorizer once (IMPORTANT 🚀)
-vectorizer = pickle.load(open("models/vectorizer.pkl", "rb"))
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+MODEL_DIR = os.path.join(BASE_DIR, "models")
+
+log_model = pickle.load(
+    open(os.path.join(MODEL_DIR, "logistic_phishing.pkl"), "rb")
+)
+
+nb_model = pickle.load(
+    open(os.path.join(MODEL_DIR, "Naive_Bayes_phishing.pkl"), "rb")
+)
+
+svm_model = pickle.load(
+    open(os.path.join(MODEL_DIR, "svm_model.pkl"), "rb")
+)
+
+vectorizer = pickle.load(
+    open(os.path.join(MODEL_DIR, "vectorizer.pkl"), "rb")
+)
+
 
 # =========================
 # HOME ROUTE
 # =========================
-@app.route('/')
+
+@app.route("/", methods=["GET"])
 def home():
-    return render_template("index.html")
+    return jsonify({
+        "message": "URLSecureNET Flask backend is running"
+    })
+
 
 # =========================
 # PREDICT ROUTE
 # =========================
-@app.route('/predict', methods=['POST'])
+
+@app.route("/predict", methods=["POST"])
 def predict():
 
-    url = request.form['url']
+    try:
 
-    #  CLEAN URL
-    cleaned_url = re.sub(r'^https?://(www\.)?', '', url).lower()
+        # Get URL from Next.js FormData
+        url = request.form.get("url")
 
-    # Convert to vector
-    vector_input = vectorizer.transform([cleaned_url])
+        if not url:
+            return jsonify({
+                "error": "URL is required"
+            }), 400
 
-    # =========================
-    # RUN ALL MODELS
-    # =========================
-    results = {}
-    confidence = {}
+        # =========================
+        # CLEAN URL
+        # =========================
 
-    # Logistic
-    pred_log = log_model.predict(vector_input)[0]
-    results['Logistic Regression'] = pred_log
-    if hasattr(log_model, "predict_proba"):
-        confidence['Logistic Regression'] = round(max(log_model.predict_proba(vector_input)[0]) * 100, 2)
+        cleaned_url = re.sub(
+            r"^https?://(www\.)?",
+            "",
+            url
+        ).lower()
 
-    # Naive Bayes
-    pred_nb = nb_model.predict(vector_input)[0]
-    results['Naive Bayes'] = pred_nb
-    confidence['Naive Bayes'] = round(max(nb_model.predict_proba(vector_input)[0]) * 100, 2)
+        # =========================
+        # VECTORIZE
+        # =========================
 
-    # Random Forest
-    # pred_rf = rf_model.predict(vector_input)[0]
-    # results['Random Forest'] = pred_rf
-    # confidence['Random Forest'] = round(max(rf_model.predict_proba(vector_input)[0]) * 100, 2)
+        vector_input = vectorizer.transform([cleaned_url])
 
-    # SVM (may not support probability)
-    pred_svm = svm_model.predict(vector_input)[0]
-    results['SVM'] = pred_svm
+        # =========================
+        # RUN MODELS
+        # =========================
 
-    # =========================
-    # FINAL DECISION (MAJORITY)
-    # =========================
-    votes = list(results.values())
-    final_prediction = max(set(votes), key=votes.count)
+        results = {}
+        confidence = {}
 
-    # =========================
-    # PASS TO FRONTEND
-    # =========================
-    return render_template(
-        "result.html",
-        url=url,
-        results=results,
-        confidence=confidence,
-        final_prediction=final_prediction
-    )
+        # Logistic Regression
+        pred_log = log_model.predict(vector_input)[0]
+
+        results["Logistic Regression"] = str(pred_log)
+
+        if hasattr(log_model, "predict_proba"):
+            confidence["Logistic Regression"] = round(
+                max(log_model.predict_proba(vector_input)[0]) * 100,
+                2
+            )
+
+        # Naive Bayes
+        pred_nb = nb_model.predict(vector_input)[0]
+
+        results["Naive Bayes"] = str(pred_nb)
+
+        if hasattr(nb_model, "predict_proba"):
+            confidence["Naive Bayes"] = round(
+                max(nb_model.predict_proba(vector_input)[0]) * 100,
+                2
+            )
+
+        # SVM
+        pred_svm = svm_model.predict(vector_input)[0]
+
+        results["SVM"] = str(pred_svm)
+
+        # =========================
+        # FINAL DECISION
+        # =========================
+
+        votes = list(results.values())
+
+        final_prediction = max(
+            set(votes),
+            key=votes.count
+        )
+
+        # =========================
+        # RETURN JSON TO NEXT.JS
+        # =========================
+
+        return jsonify({
+            "url": url,
+            "final_prediction": final_prediction,
+            "results": results,
+            "confidence": confidence
+        })
+
+    except Exception as e:
+
+        print("Prediction error:", e)
+
+        return jsonify({
+            "error": str(e)
+        }), 500
+
 
 # =========================
 # RUN APP
 # =========================
+
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    app.run(
+        host="0.0.0.0",
+        port=5000,
+        debug=True
+    )

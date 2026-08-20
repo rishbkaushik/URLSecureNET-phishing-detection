@@ -1,0 +1,28 @@
+{
+  "name": "urlsecurenet-phishing-detection",
+  "version": "1.0.0",
+  "description": "An AI-powered web application that detects whether a URL is legitimate or phishing using multiple Machine Learning models.",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rishbkaushik/URLSecureNET-phishing-detection.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rishbkaushik/URLSecureNET-phishing-detection/issues"
+  },
+  "homepage": "https://github.com/rishbkaushik/URLSecureNET-phishing-detection#readme",
+  "dependencies": {
+    "next": "^16.3.1",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8"
+  }
+}
