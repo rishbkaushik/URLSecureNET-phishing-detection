@@ -1,9 +1,0 @@
-{"timestamp":"00:00:01.764","source":"Server","level":"LOG","message":""}
-{"timestamp":"00:00:02.802","source":"Browser","level":"INFO","message":"Download the React DevTools for a better development experience: https://react.dev/link/react-devtools"}
-{"timestamp":"00:00:02.835","source":"Browser","level":"INFO","message":"Download the React DevTools for a better development experience: https://react.dev/link/react-devtools"}
-{"timestamp":"00:00:06.830","source":"Browser","level":"LOG","message":"Flask response: {\"confidence\":{\"Logistic Regression\":87.7,\"Naive Bayes\":94.61},\"final_prediction\":\"good\",\"results\":{\"Logistic Regression\":\"good\",\"Naive Bayes\":\"good\",\"SVM\":\"good\"},\"url\":\"www.monkey.com\"}"}
-{"timestamp":"00:00:13.229","source":"Browser","level":"INFO","message":"Download the React DevTools for a better development experience: https://react.dev/link/react-devtools"}
-{"timestamp":"00:00:24.811","source":"Browser","level":"INFO","message":"Download the React DevTools for a better development experience: https://react.dev/link/react-devtools"}
-{"timestamp":"00:00:35.243","source":"Browser","level":"LOG","message":"Flask response: {\"confidence\":{\"Logistic Regression\":77.29,\"Naive Bayes\":73.21},\"final_prediction\":\"good\",\"results\":{\"Logistic Regression\":\"good\",\"Naive Bayes\":\"bad\",\"SVM\":\"good\"},\"url\":\"www.google.com\"}"}
-{"timestamp":"00:00:46.868","source":"Browser","level":"INFO","message":"Download the React DevTools for a better development experience: https://react.dev/link/react-devtools"}
-{"timestamp":"00:00:49.405","source":"Browser","level":"LOG","message":"Flask response: {\"confidence\":{\"Logistic Regression\":64,\"Naive Bayes\":78.87},\"final_prediction\":\"bad\",\"results\":{\"Logistic Regression\":\"bad\",\"Naive Bayes\":\"good\",\"SVM\":\"bad\"},\"url\":\"www.googlecareers.in\"}"}
