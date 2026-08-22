@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: urlsecurenet-backend
+
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: urlsecurenet-backend
+
+  template:
+    metadata:
+      labels:
+        app: urlsecurenet-backend
+
+    spec:
+      containers:
+        - name: backend
+
+          image: urlsecurenet-backend:latest
+
+          imagePullPolicy: Never
+
+          ports:
+            - containerPort: 5000

@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: urlsecurenet-frontend
+
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: urlsecurenet-frontend
+
+  template:
+    metadata:
+      labels:
+        app: urlsecurenet-frontend
+
+    spec:
+      containers:
+        - name: frontend
+
+          image: urlsecurenet-frontend:latest
+
+          imagePullPolicy: Never
+
+          ports:
+            - containerPort: 3000

@@ -1,0 +1,10 @@
+node_modules
+.next
+.git
+.gitignore
+Dockerfile.backend
+Dockerfile.frontend
+__pycache__
+*.pyc
+.ipynb_checkpoints
+.vscode

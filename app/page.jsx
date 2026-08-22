@@ -25,7 +25,7 @@ export default function Home() {
       formData.append("model", model);
 
       // Send URL to Flask backend
-      const response = await fetch("http://127.0.0.1:5000/predict", {
+      const response = await fetch("/api/predict", {
         method: "POST",
         body: formData,
       });
@@ -57,13 +57,17 @@ export default function Home() {
 
       router.push(`/result?${params.toString()}`);
 
-    } catch (error) {
-      console.error("Error:", error);
+      } catch (error) {
+         console.error("ACTUAL ERROR:", error);
+         setError(error.message);
+        }
+    // } catch (error) {
+    //   console.error("Error:", error);
 
-      setError(
-        "Unable to connect to Flask backend. Make sure Flask is running on port 5000."
-      );
-    } finally {
+    //   setError(
+    //     "Unable to connect to Flask backend. Make sure Flask is running on port 5000."
+    //   );
+     finally {
       setLoading(false);
     }
   };

@@ -1,0 +1,18 @@
+FROM node:20-alpine
+
+WORKDIR /app
+
+COPY package*.json ./
+
+RUN npm install
+
+COPY . .
+
+RUN echo "===== PAGE.JSX INSIDE BUILD =====" && \
+    grep -n "/api/predict\|urlsecurenet-backend" /app/app/page.jsx
+
+RUN npm run build
+
+EXPOSE 3000
+
+CMD ["npm", "start"]
